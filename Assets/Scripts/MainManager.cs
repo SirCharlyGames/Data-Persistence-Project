@@ -15,24 +15,16 @@ public class MainManager : MonoBehaviour
     public Text highScoreText;
     
     private bool m_Started = false;
-    private int m_Points;
-    private int highScore;
+    private int m_Points = 0;
+    private int highScore = 0;
     private string playerName;
     
     private bool m_GameOver = false;
 
-    // Start is called before the first frame update
-    private void Awake()
-    {
-        LoadHighScore();
-    }
     void Start()
     {
-        SetGame();
-    }
-    void SetGame()
-    {
-        SetName(GameManager.instance.name);
+        LoadHighScore();
+        PrintHighScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -50,6 +42,12 @@ public class MainManager : MonoBehaviour
     }
     private void Update()
     {
+        if (m_Points >= highScore)
+        {
+            //update the score live
+            highScore = m_Points;
+            PrintHighScore();
+        }
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -68,6 +66,7 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
             }
         }
     }
@@ -84,9 +83,10 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
         SaveHighScore();
     }
-    public void SetName(Text name)
+    
+    public void PrintHighScore()
     {
-        highScoreText.text = "Name: " + name.text + "       High Score: " + highScore;
+        highScoreText.text = "Name: " + MenuManager.instance.nameText.text + "       High Score: " + highScore;
     }
     [System.Serializable]
     class SavedData
@@ -96,11 +96,14 @@ public class MainManager : MonoBehaviour
     }
     public void SaveHighScore()
     {
-        SavedData data = new SavedData();
-        data.highScore = m_Points;
-        data.playerNameHighScore = playerName;
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        if(m_Points >= highScore)
+        {
+            SavedData data = new SavedData();
+            data.highScore = m_Points;
+            data.playerNameHighScore = playerName;
+            string json = JsonUtility.ToJson(data);
+            File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        }
     }
     public void LoadHighScore()
     {
@@ -113,4 +116,5 @@ public class MainManager : MonoBehaviour
             playerName = data.playerNameHighScore;
         }
     }
+    
 }

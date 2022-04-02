@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public Text name;
+    public Text playerName;
     private void Awake()
     {
         if(instance != null)
@@ -17,9 +17,4 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    private void Start()  
-    {
-         name = GameObject.Find("Player Name").GetComponent<Text>();
-    }
-
 }

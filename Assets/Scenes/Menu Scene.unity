@@ -538,9 +538,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'NAME
-
-'
+  m_Text: Carlos
 --- !u!222 &1662950156
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -890,7 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29bf5d50f9e7b46925cf40620bc57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: {fileID: 0}
+  name: {fileID: 1662950155}
 --- !u!4 &1975776230
 Transform:
   m_ObjectHideFlags: 0
